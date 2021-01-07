@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen&display=swap");
+.row {
+  z-index: 2;
+  min-height: 60px;
+  width: 100%;
+  margin-right: 0.5rem !important;
+  border-radius: 5px;
+  color: white;
+}
+
+.row div {
+  font-size: x-large;
+  font-weight: 600;
+  font-family: "Oxygen", sans-serif;
+}
+
+nav {
+  background-image: url("src/assets/imagesCommon/header_bg.png");
+  border-radius: 5px;
+}

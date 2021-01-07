@@ -1,16 +1,4 @@
 import { Component } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
-
-const GET_IMAGES = gql`
-  query getImage($path: String) {
-    getImages(path: $path) {
-      id
-      description
-      date
-      index
-    }
-  }
-`;
 
 @Component({
   selector: 'app-root',
@@ -19,19 +7,9 @@ const GET_IMAGES = gql`
 })
 export class AppComponent {
   datas = [];
+  title = 'KaleDizgi';
 
-  constructor(public apollo: Apollo) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.apollo
-      .watchQuery<any>({
-        query: GET_IMAGES,
-        variables: {
-          path: 'images/slider',
-        },
-      })
-      .valueChanges.subscribe((data) => {
-        this.datas.push(data.data.getImages);
-      });
-  }
+  ngOnInit() {}
 }

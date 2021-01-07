@@ -1,6 +1,13 @@
-<ul *ngFor="let image of datas[0]">
-  <li>{{ image.id }}</li>
-  <li>{{ image.description }}</li>
-  <li>{{ image.date }}</li>
-  <li>{{ image.index }}</li>
-</ul>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <app-navbar></app-navbar>
+      <router-outlet></router-outlet>
+      <app-footer class="mt-2"></app-footer>
+    </div>
+  </div>
+</div>
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>

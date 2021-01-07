@@ -1,0 +1,135 @@
+<div class="row my-3">
+  <div class="col-sm-6">
+    <div class="mb-3">
+      <h3>Bize sosyal medya ile ulaşın.</h3>
+    </div>
+    <div class="col-sm-12 mt-0">
+      <div class="row">
+        <div class="col-sm-6 text-center shadow-lg">
+          <a
+            href="https://api.whatsapp.com/send?phone=905382280386"
+            target="_blank"
+          >
+            <img
+              src="https://drive.google.com/uc?export=view&id=1VqmCtk1VxWdapvpUjpJ06eSFL5aQuZkG"
+          /></a>
+          <h5>Whatsapp</h5>
+        </div>
+        <div class="col-sm-6 text-center shadow-lg">
+          <a href="https://twitter.com/Selam61589297?s=08" target="_blank"
+            ><img
+              src="https://drive.google.com/uc?export=view&id=1MoBoPxSAo8_bTmRpwasMJn5H3IJTSvHt"
+          /></a>
+          <h5>Twitter</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 mt-5">
+      <div class="row justify-content-center">
+        <div class="col-sm-6 text-center shadow-lg">
+          <a
+            href="https://armut.com/hizmetveren/samet-kale-bursa-osmangazi-dizgi-mizanpaj_888216"
+            target="_blank"
+          >
+            <img
+              src="https://drive.google.com/uc?export=view&id=1dP_e5eYt8UatGZCz6cV8dUyLddjZS5OL"
+          /></a>
+          <h5>Armut.com</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="mb-3">
+      <h3>Bize mesaj ile ulaşın.</h3>
+    </div>
+    <div class="card shadow-lg">
+      <div class="card-body">
+        <form [formGroup]="angForm" novalidate>
+          <div class="form-group">
+            <label>İsminiz:</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              #name
+            />
+          </div>
+          <div
+            *ngIf="
+              angForm.controls['name'].invalid &&
+              (angForm.controls['name'].dirty ||
+                angForm.controls['name'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="angForm.controls['name'].errors.required">
+              Size hitap edebileceğimiz bir isim giriniz lüfen.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mail Adresiniz: </label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="mail"
+              #mail
+            />
+          </div>
+          <div
+            *ngIf="
+              angForm.controls['mail'].invalid &&
+              (angForm.controls['mail'].dirty ||
+                angForm.controls['mail'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="angForm.controls['mail'].errors.required">
+              Size dönüş yapabileceğimiz bir mail adresi veya telefon numarası
+              giriniz lütfen.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mesajınız:</label>
+            <textarea
+              class="form-control"
+              rows="7"
+              cols="5"
+              formControlName="message"
+              #message
+            ></textarea>
+          </div>
+          <div
+            *ngIf="
+              angForm.controls['message'].invalid &&
+              (angForm.controls['message'].dirty ||
+                angForm.controls['message'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="angForm.controls['message'].errors.required">
+              Bir kaç cümle ile bize istek, dilek ve şikayetlerinizi
+              iletebilirsiniz.
+            </div>
+          </div>
+          <div class="form-group">
+            <button
+              type="submit"
+              (click)="
+                Submit(name.value, mail.value, message.value);
+                name.value = '';
+                mail.value = '';
+                message.value = ''
+              "
+              class="btn btn-primary"
+              [disabled]="angForm.pristine || angForm.invalid"
+            >
+              Gönder
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

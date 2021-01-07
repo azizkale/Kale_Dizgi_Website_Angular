@@ -1,0 +1,47 @@
+/* logo font family */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,700&display=swap");
+
+/* navbar items font family */
+
+@import url("https://fonts.googleapis.com/css2?family=Oxygen&display=swap");
+#navbarSupportedContent ul li a {
+  font-size: x-large;
+  font-weight: bold;
+  font-family: "Oxygen", sans-serif;
+}
+
+nav {
+  background-image: url("src/assets/imagesCommon/header_bg.png");
+  border-radius: 5px;
+}
+
+#navbarSupportedContent ul li a:hover {
+  background-color: white;
+  color: green;
+  border-radius: 10px;
+}
+
+#idKaleDizgiName {
+  font-size: xx-large;
+  font-family: "Roboto Mono", monospace;
+}
+
+#logo {
+  height: 50px;
+  border-radius: 5px;
+}
+
+#logo:hover {
+  height: 65px;
+  border-radius: 10px;
+}
+
+@media (max-width: 450px) {
+  #idMotto {
+    visibility: hidden;
+  }
+  #idKaleDizgiName {
+    width: 50%;
+  }
+}

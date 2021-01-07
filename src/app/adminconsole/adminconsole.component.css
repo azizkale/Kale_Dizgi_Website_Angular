@@ -1,0 +1,21 @@
+.sliderCards,
+.shadowcss {
+  width: 284px;
+  padding: 10px 10px 20px 10px;
+  border: 1px solid #bfbfbf;
+  background-color: white;
+  box-shadow: 10px 10px 5px #aaaaaa;
+  max-width: 100% !important;
+}
+
+.form-row input[type="text"],
+textarea,
+.form-group input[type="text"],
+textarea,
+.form-group input[type="number"] {
+  color: red;
+}
+
+.material-icons {
+  font-size: xx-large;
+}

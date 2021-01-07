@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@700&display=swap");
+.container-fluid {
+  margin: 0 auto;
+  position: relative;
+  margin-top: 45px;
+  z-index: 1;
+}
+
+#gallery-1 {
+  border-radius: 5px;
+}
+
+.galeriIsimleri {
+  font-family: "Source Code Pro", monospace;
+}
