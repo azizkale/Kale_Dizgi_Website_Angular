@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GalleryService } from '../services/gallery.service';
 import { ImageService } from '../services/image.service';
+import { ImageCRUDS } from './ImageCRUDS';
+import { GalleryCRUDS } from './galleryCRUDS';
 
 @Component({
   selector: 'app-adminconsole',
@@ -16,7 +19,13 @@ export class AdminconsoleComponent implements OnInit {
 
   _loginControl: true;
 
-  constructor(private fb: FormBuilder, public imageservice: ImageService) {
+  constructor(
+    private fb: FormBuilder,
+    public imageservice: ImageService,
+    public galleryservice: GalleryService,
+    public imagecruds: ImageCRUDS,
+    public gallerycruds: GalleryCRUDS
+  ) {
     this.createNewGalleryForm();
   }
 
@@ -51,15 +60,7 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   addImage(path, url, description) {
-    const dateNow = new Date();
-    const dateNowISO = dateNow.toDateString();
-
-    const newImage = {
-      id: url,
-      description: description,
-      date: dateNowISO,
-      index: 0,
-    };
+    const newImage = this.imagecruds.addImage(url, description);
     this.imageservice.addImage(path, newImage);
   }
 
@@ -71,14 +72,14 @@ export class AdminconsoleComponent implements OnInit {
     fontSize,
     bgPhotoLink
   ) {
-    const newGallery = {
-      galleryTitle: galleryTitle,
-      fontlink: fontlink,
-      fontFamily: fontFamily,
-      fontColor: fontColor,
-      fontSize: fontSize,
-      bgPhotoLink: bgPhotoLink,
-    };
-    this.imageservice.addGallery('Galleries', newGallery);
+    const newGallery = this.gallerycruds.addNewGallery(
+      galleryTitle,
+      fontlink,
+      fontFamily,
+      fontColor,
+      fontSize,
+      bgPhotoLink
+    );
+    this.galleryservice.addGallery('Galleries', newGallery);
   }
 }

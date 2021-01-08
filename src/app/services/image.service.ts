@@ -1,6 +1,6 @@
 import { Injectable, ɵɵtrustConstantResourceUrl } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 const GET_IMAGE = gql`
   query getImages($path: String) {
@@ -19,19 +19,6 @@ const ADD_IMAGE = gql`
       description
       date
       index
-    }
-  }
-`;
-const ADD_GALLERY = gql`
-  mutation addGallery($path: String!, $gallery: String!) {
-    addGallery(path: $path, gallery: $gallery) {
-      id
-      backGroungImageUrl
-      fontColor
-      fontFamily
-      fontSize
-      galleryTitle
-      googleFontLink
     }
   }
 `;
@@ -61,17 +48,5 @@ export class ImageService {
         },
       })
       .subscribe((data) => console.log(data));
-  }
-
-  addGallery(path: string, gallery: object) {
-    this.apollo
-      .mutate({
-        mutation: ADD_GALLERY,
-        variables: {
-          path: path,
-          gallery: JSON.stringify(gallery),
-        },
-      })
-      .subscribe();
   }
 }
