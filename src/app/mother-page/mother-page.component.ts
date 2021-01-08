@@ -16,4 +16,8 @@ export class MotherPageComponent implements OnInit {
   }
 
   ngOnInit() {}
+  GetScreenSizeForTheGalleries() {
+    if (window.innerWidth > 400) return { width: 315, height: 450, space: 5 };
+    else return { width: 210, height: 300, space: 5 };
+  }
 }

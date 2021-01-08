@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-slider',
@@ -8,24 +9,24 @@ import { Component, OnInit } from '@angular/core';
 export class SliderComponent implements OnInit {
   imageObject: Array<object> = [];
 
-  constructor() {}
+  constructor(public imageService: ImageService) {}
 
   ngOnInit() {
     this.GetSliderImages();
   }
 
   GetSliderImages() {
-    // this.serviceFireBase.GetSliderImages().pipe(take(1)).subscribe(img => {
-    //   img.map(x => {
-    //     var obj = {
-    //       image: 'https://drive.google.com/uc?export=view&id=' + x.id,
-    //       thumbImage: 'https://drive.google.com/uc?export=view&id=' + x.id,
-    //       alt: x.description,
-    //       title: x.description,
-    //       date: x.date
-    //     };
-    //     this.imageObject.push(obj);
-    //   })
-    // });
+    this.imageService.getImages('images/slider').subscribe((data) => {
+      data.data.getImages.map((img) => {
+        const obj = {
+          image: img.id,
+          thumbImage: img.id,
+          alt: img.description,
+          title: img.description,
+          date: img.date,
+        };
+        this.imageObject.push(obj);
+      });
+    });
   }
 }
