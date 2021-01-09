@@ -16,7 +16,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SliderComponent } from './slider/slider.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +38,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     ReactiveFormsModule,
     NgImageSliderModule,
     AccordionModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

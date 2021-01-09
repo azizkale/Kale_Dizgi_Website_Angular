@@ -3,9 +3,10 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 
 const GET_IMAGE = gql`
-  query getImages($path: String) {
+  query getImages($path: String!) {
     getImages(path: $path) {
       id
+      url
       description
       date
       index
@@ -16,6 +17,7 @@ const ADD_IMAGE = gql`
   mutation addImage($path: String, $image: String) {
     addImage(path: $path, image: $image) {
       id
+      url
       description
       date
       index

@@ -1,127 +1,255 @@
-<form class="mt-5" [formGroup]="newGalleryForm" novalidate>
-  <div class="col-sm-6 border border-success p-3">
-    <div class="form-group">
-      <label class="mb-0">
-        <h3>Yeni Galeri</h3>
-      </label>
-      <button
-        [disabled]="newGalleryForm.pristine || newGalleryForm.invalid"
-        (click)="
-          addNewGallery(
-            galleryTitle.value,
-            fontlink.value,
-            fontFamily.value,
-            fontColor.value,
-            fontSize.value,
-            bgPhotoLink.value
-          );
-          galleryTitle.value = '';
-          fontlink.value = '';
-          fontFamily.value = '';
-          fontColor.value = '';
-          fontSize.value = '';
-          bgPhotoLink.value = ''
-        "
-        class="material-icons float-right btn"
-      >
-        note_add
-      </button>
-    </div>
-    <div class="form-group">
-      <label for="galeriadi" class="mb-0">
-        <h6>Galeri Adı:</h6>
-      </label>
-      <input
-        type="text"
-        class="form-control mt-0 mb-2"
-        formControlName="galleryTitle"
-        #galleryTitle
-        placeholder="Galeri Adı (gerekli)"
-      />
-    </div>
-    <div class="form-group">
-      <label for="fontlink" class="mb-0">
-        <h6>Font Linki:</h6>
-      </label>
-      <textarea
-        class="form-control mt-0 mb-2 w-100"
-        rows="4"
-        formControlName="fontlink"
-        #fontlink
-        placeholder="(gerekli)"
-      ></textarea>
-    </div>
-    <div class="form-group">
-      <label for="yazikarakteri" class="mb-0">
-        <h6>Font Family:</h6>
-      </label>
-      <input
-        type="text"
-        class="form-control mt-0 mb-2"
-        formControlName="fontFamily"
-        #fontFamily
-        placeholder="'family1','family2' (gerekli)"
-      />
-    </div>
-    <div class="form-group">
-      <label for="renk" class="mb-0">
-        <h6>Yazı Rengi:</h6>
-      </label>
-      <input
-        type="text"
-        class="form-control mt-0 mb-2"
-        formControlName="fontColor"
-        #fontColor
-        placeholder="#800000 veya blue (gerekli)"
-      />
-    </div>
-    <div class="form-group">
-      <label for="punto" class="mb-0">
-        <h6>Punto Büyüklüğü:</h6>
-      </label>
-      <input
-        type="number"
-        class="form-control mt-0 mb-2"
-        formControlName="fontSize"
-        #fontSize
-        placeholder="30 (gerekli)"
-      />
-    </div>
-    <div class="form-group">
-      <label for="photo" class="mb-0">
-        <h6>Arka Plan Görseli:</h6>
-      </label>
-      <textarea
-        class="form-control w-100 mt-0 mb-2"
-        rows="4"
-        #bgPhotoLink
-      ></textarea>
-    </div>
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+<div class="row" *ngIf="_loginControl">
+  <div class="col-sm-12 mb-3">
+    <button class="btn btn-primary float-right" (click)="LogOut()">
+      Oturumu Kapat
+    </button>
   </div>
-</form>
-<div class="col-sm-3 bg-success py-2 mt-2 rounded shadowcss">
-  <div class="card my-2">
-    <div class="card-header">
-      <span class="float-left font-weight-bold">Yeni Görsel:</span>
-      <button
-        (click)="
-          addImage('images/slider', newUrl.value, newTitle.value);
-          newUrl.value = '';
-          newTitle.value = ''
-        "
-        class="material-icons float-right btn"
-      >
-        note_add
-      </button>
-    </div>
-    <div class="card-body">
-      <span class="badge text-dark font-weight-bold w-75 text-left">url:</span
-      ><br />
-      <textarea class="w-100 mb-1" #newUrl rows="4"></textarea><br />
-      <span class="badge text-dark font-weight-bold w-75 text-left"
-        >açıklama:</span
-      ><br />
-      <textarea class="w-100 mb-1" #newTitle rows="4"></textarea>
-    </div>
+  <div class="col-sm-12">
+    <accordion>
+      <!-- ALL IMAGES CONTROLS -->
+      <accordion-group>
+        <h3 accordion-heading>Görsel Kontrolleri</h3>
+        <accordion [isAnimated]="true">
+          <!-- ====================Slider Section============= -->
+          <accordion-group>
+            <button
+              type="button"
+              class="btn btn-default btn-lg w-100"
+              accordion-heading
+              (click)="deg = !deg"
+            >
+              <span class="material-icons float-left" *ngIf="!deg">
+                arrow_circle_down
+              </span>
+              <span class="material-icons float-left" *ngIf="deg">
+                arrow_circle_up
+              </span>
+              <span class="float-left mx-3">
+                <h4>Slider</h4>
+              </span>
+            </button>
+
+            <!-- Images in Slider -->
+            <div class="row slider">
+              <div class="col-sm-3" *ngFor="let item of imagesSlider">
+                <div class="card my-1 sliderCards">
+                  <div class="card-header">
+                    <button
+                      (click)="DeleteImagesOfSlider(item.url)"
+                      class="material-icons float-right btn btn-danger"
+                    >
+                      delete
+                    </button>
+                    <button
+                      (click)="UpdateSliderImages(url.value, title.value)"
+                      class="material-icons float-right btn"
+                    >
+                      autorenew
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <div class="text-center">
+                      <img
+                        class="img-fluid"
+                        [src]="item.image"
+                        style="height: 200px; width: 150px; margin: 0 auto"
+                        [alt]="item.alt"
+                      />
+                    </div>
+                    <span
+                      [hidden]="true"
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >url:</span
+                    >
+                    <textarea [hidden]="true" class="w-100" #url rows="4">{{
+                      item.url
+                    }}</textarea>
+                    <span
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >açıklama:</span
+                    >
+                    <textarea class="w-100" #title rows="4">{{
+                      item.title
+                    }}</textarea>
+                    <span
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >ekleme tarihi:</span
+                    >
+                    <label class="" for=" ">{{
+                      item.date | date: "dd/MM/yyyy"
+                    }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Adding new photo -->
+            <div class="col-sm-3 bg-success py-2 mt-2 rounded shadowcss">
+              <div class="card my-2">
+                <div class="card-header">
+                  <span class="float-left font-weight-bold">Yeni Görsel:</span>
+                  <button
+                    (click)="
+                      AddImageToSlider(newUrl.value, newTitle.value);
+                      newUrl.value = '';
+                      newTitle.value = ''
+                    "
+                    class="material-icons float-right btn"
+                  >
+                    note_add
+                  </button>
+                </div>
+                <div class="card-body">
+                  <span class="badge text-dark font-weight-bold w-75 text-left"
+                    >url:</span
+                  ><br />
+                  <textarea class="w-100 mb-1" #newUrl rows="4"></textarea
+                  ><br />
+                  <span class="badge text-dark font-weight-bold w-75 text-left"
+                    >açıklama:</span
+                  ><br />
+                  <textarea class="w-100 mb-1" #newTitle rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+          </accordion-group>
+
+          <!-- ==============Images In Galleries Sections============ -->
+          <accordion-group
+            *ngFor="let gallery of imagesOfGalleries; let i = index"
+          >
+            <button
+              type="button"
+              class="btn btn-default btn-lg w-100"
+              accordion-heading
+              (click)="shw = !shw"
+            >
+              <span class="material-icons float-left" *ngIf="!shw">
+                arrow_circle_down
+              </span>
+              <span class="material-icons float-left" *ngIf="shw">
+                arrow_circle_up
+              </span>
+              <span class="float-left mx-3">
+                <h4>{{ gallery["galleryName"] }}</h4>
+              </span>
+            </button>
+
+            <!-- Images of Galleries -->
+            <div class="row">
+              <div
+                class="col-sm-3"
+                *ngFor="let image of gallery['galleryImages']; let j = index"
+              >
+                <div class="card my-1 sliderCards">
+                  <div class="card-header">
+                    <button
+                      (click)="DeleteImageFromGalleries()"
+                      class="material-icons float-right btn btn-danger"
+                      style="font-size: xx-large"
+                    >
+                      delete
+                    </button>
+                    <button
+                      (click)="UpdateImageInGallery()"
+                      class="material-icons float-right btn"
+                      style="font-size: xx-large"
+                    >
+                      autorenew
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <div class="text-center">
+                      <img
+                        class="img-fluid"
+                        [src]="image['url']"
+                        style="height: 200px; width: 150px; margin: 0 auto"
+                        alt="image['description']"
+                      />
+                    </div>
+                    <span
+                      [hidden]="true"
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >url:</span
+                    >
+                    <textarea disabled [hidden]="true" class="w-100" rows="4">{{
+                      image["url"]
+                    }}</textarea>
+                    <span
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >açıklama:</span
+                    >
+                    <textarea class="w-100" #titleG rows="4">{{
+                      image["description"]
+                    }}</textarea>
+                    <span
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >index no:</span
+                    >
+                    <input
+                      type="number"
+                      class="w-25"
+                      #imageIndex
+                      value="{{ image['index'] }}"
+                    />
+                    <span
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >ekleme tarihi:</span
+                    >
+                    <label class="" for=" ">{{
+                      image["date"] | date: "dd/MM/yyyy"
+                    }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Adding new photo to a Gallery -->
+            <div class="col-sm-3 bg-success py-2 mt-2 rounded shadowcss">
+              <div class="card my-2">
+                <div class="card-header">
+                  <span class="float-left font-weight-bold">Yeni Görsel:</span>
+                  <button
+                    (click)="
+                      AddImageToGallery(
+                        newUrlG.value,
+                        newTitleG.value,
+                        gallery
+                      );
+                      newUrlG.value = '';
+                      newTitleG.value = ''
+                    "
+                    class="material-icons float-right btn"
+                  >
+                    note_add
+                  </button>
+                </div>
+                <div class="card-body">
+                  <span class="badge text-dark font-weight-bold w-75 text-left"
+                    >url:</span
+                  ><br />
+                  <textarea class="w-100 mb-1" #newUrlG rows="4 "></textarea
+                  ><br />
+                  <span class="badge text-dark font-weight-bold w-75 text-left"
+                    >açıklama:</span
+                  ><br />
+                  <textarea class="w-100 mb-1" #newTitleG rows=" 4 "></textarea>
+                </div>
+              </div>
+            </div>
+          </accordion-group>
+        </accordion>
+      </accordion-group>
+      <!-- GALLERIES FEATURES -->
+
+      <!-- MESSAGES FROM CUSTOMERS CONTROL -->
+    </accordion>
   </div>
+</div>
+
+<div class="m-2" *ngIf="!_loginControl">
+  <a href="" routerLink="/login">Lütfen yetkili girişi yapınız.</a>
 </div>

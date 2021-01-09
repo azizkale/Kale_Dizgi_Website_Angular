@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 
 const ADD_GALLERY = gql`
@@ -14,7 +15,19 @@ const ADD_GALLERY = gql`
     }
   }
 `;
-
+const GET_GALLERYINFOS = gql`
+  query GetGalleryInfos {
+    getGalleryInfos {
+      id
+      backGroungImageUrl
+      fontColor
+      fontFamily
+      fontSize
+      galleryTitle
+      googleFontLink
+    }
+  }
+`;
 @Injectable({
   providedIn: 'root',
 })
@@ -31,5 +44,11 @@ export class GalleryService {
         },
       })
       .subscribe();
+  }
+
+  getGalleryInfos(): Observable<any> {
+    return this.apollo.watchQuery<any>({
+      query: GET_GALLERYINFOS,
+    }).valueChanges;
   }
 }
