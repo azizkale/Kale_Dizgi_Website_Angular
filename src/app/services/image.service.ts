@@ -29,6 +29,17 @@ const DELETE_IMAGE = gql`
     deleteImage(path: $path, id: $id)
   }
 `;
+const UPPDATE_IMAGE = gql`
+  mutation updateImage($path: String!, $image: String!) {
+    updateImage(path: $path, image: $image) {
+      id
+      description
+      date
+      index
+      url
+    }
+  }
+`;
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +74,16 @@ export class ImageService {
       variables: {
         path: path,
         id: imageId,
+      },
+    });
+  }
+
+  updateImage(path: string, image: object): Observable<any> {
+    return this.apollo.mutate({
+      mutation: UPPDATE_IMAGE,
+      variables: {
+        path: path,
+        image: JSON.stringify(image),
       },
     });
   }

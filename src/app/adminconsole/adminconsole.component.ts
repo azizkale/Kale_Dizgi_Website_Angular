@@ -170,7 +170,18 @@ export class AdminconsoleComponent implements OnInit {
       );
   }
 
-  UpdateImageInGallery(description, index, gallery) {}
+  UpdateImageInGallery(description, index, gallery, image) {
+    const updatedImage = {
+      description: description,
+      index: index,
+    };
+    this.imageService
+      .updateImage(
+        'images/Galleries/' + gallery['id'] + '/' + image['id'],
+        updatedImage
+      )
+      .subscribe((data) => {});
+  }
   DeleteThisGallery() {}
   UpdateThisGallery() {}
 }
