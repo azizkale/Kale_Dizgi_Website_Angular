@@ -1,4 +1,4 @@
-import { Injectable, ɵɵtrustConstantResourceUrl } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 
@@ -22,6 +22,11 @@ const ADD_IMAGE = gql`
       date
       index
     }
+  }
+`;
+const DELETE_IMAGE = gql`
+  mutation deleteImage($path: String!, $id: ID!) {
+    deleteImage(path: $path, id: $id)
   }
 `;
 
@@ -49,6 +54,16 @@ export class ImageService {
           image: JSON.stringify(image),
         },
       })
-      .subscribe((data) => console.log(data));
+      .subscribe();
+  }
+
+  deleteImage(path: string, imageId: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: DELETE_IMAGE,
+      variables: {
+        path: path,
+        id: imageId,
+      },
+    });
   }
 }

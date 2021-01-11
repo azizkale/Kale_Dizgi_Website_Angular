@@ -61,10 +61,13 @@ export class AdminconsoleComponent implements OnInit {
           alt: img.description,
           title: img.description,
           date: img.date,
+          index: img.index,
+          id: img.id,
         };
         this.imagesSlider.push(obj);
       });
     });
+    console.log(this.imagesSlider);
   }
 
   AddImageToSlider(url, description) {
@@ -80,6 +83,16 @@ export class AdminconsoleComponent implements OnInit {
       index: 0,
     };
     this.imageservice.addImage('images/slider', newImage);
+  }
+
+  DeleteImagesOfSlider(imageId) {
+    this.imageservice
+      .deleteImage('images/slider/', imageId)
+      .subscribe((data) =>
+        data.data.deleteImage
+          ? 'Görsel başarı ile silindi'
+          : 'Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.'
+      );
   }
 
   AddImageToGallery(url, description, gallery) {
@@ -125,7 +138,6 @@ export class AdminconsoleComponent implements OnInit {
   GetGalleries() {
     this.galleryservice.getGalleryInfos().subscribe((data) => {
       this.allGalleries = data.data.getGalleryInfos;
-      console.log(this.allGalleries);
     });
   }
 
@@ -147,7 +159,6 @@ export class AdminconsoleComponent implements OnInit {
           });
       });
     });
-    console.log(this.imagesOfGalleries);
   }
 
   DeleteImageFromGalleries() {}
