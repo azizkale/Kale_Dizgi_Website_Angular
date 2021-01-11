@@ -121,6 +121,7 @@ export class AdminconsoleComponent implements OnInit {
     this.galleryservice.addGallery('Galleries', newGallery);
   }
 
+  //Gallery Infos
   GetGalleries() {
     this.galleryservice.getGalleryInfos().subscribe((data) => {
       this.allGalleries = data.data.getGalleryInfos;
@@ -151,4 +152,6 @@ export class AdminconsoleComponent implements OnInit {
 
   DeleteImageFromGalleries() {}
   UpdateImageInGallery() {}
+  DeleteThisGallery() {}
+  UpdateThisGallery() {}
 }
