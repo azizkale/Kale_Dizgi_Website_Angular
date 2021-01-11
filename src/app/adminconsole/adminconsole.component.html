@@ -135,7 +135,7 @@
                 arrow_circle_up
               </span>
               <span class="float-left mx-3">
-                <h4>{{ gallery["galleryName"] }}</h4>
+                <h4>{{ gallery["galleryInfo"]["galleryTitle"] }}</h4>
               </span>
             </button>
 
@@ -148,14 +148,22 @@
                 <div class="card my-1 sliderCards">
                   <div class="card-header">
                     <button
-                      (click)="DeleteImageFromGalleries()"
+                      (click)="
+                        DeleteImageFromGalleries(gallery['galleryInfo'], image)
+                      "
                       class="material-icons float-right btn btn-danger"
                       style="font-size: xx-large"
                     >
                       delete
                     </button>
                     <button
-                      (click)="UpdateImageInGallery()"
+                      (click)="
+                        UpdateImageInGallery(
+                          imageDescription.value,
+                          imageIndex.value,
+                          gallery['galleryInfo']
+                        )
+                      "
                       class="material-icons float-right btn"
                       style="font-size: xx-large"
                     >
@@ -183,7 +191,7 @@
                       class="badge text-dark font-weight-bold w-75 text-left"
                       >açıklama:</span
                     >
-                    <textarea class="w-100" #titleG rows="4">{{
+                    <textarea class="w-100" #imageDescription rows="4">{{
                       image["description"]
                     }}</textarea>
                     <span
@@ -217,7 +225,7 @@
                       AddImageToGallery(
                         newUrlG.value,
                         newTitleG.value,
-                        gallery
+                        gallery['galleryInfo']
                       );
                       newUrlG.value = '';
                       newTitleG.value = ''

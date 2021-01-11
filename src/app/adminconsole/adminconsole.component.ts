@@ -95,7 +95,7 @@ export class AdminconsoleComponent implements OnInit {
       );
   }
 
-  AddImageToGallery(url, description, gallery) {
+  AddImageToGallery(url, description, galleryInfo) {
     const dateNow = new Date();
     const dateNowISO = dateNow.toDateString();
 
@@ -108,7 +108,7 @@ export class AdminconsoleComponent implements OnInit {
       index: 0,
     };
     this.imageservice.addImage(
-      'images/Galleries/-MQYP5PLAqptirJZwAKb',
+      'images/Galleries/' + galleryInfo['id'],
       newImage
     );
   }
@@ -142,7 +142,7 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   GetImagesOnGalleries() {
-    let galleryName, galleryImages;
+    let galleryImages;
 
     this.galleryservice.getGalleryInfos().subscribe((data) => {
       this.allGalleries = data.data.getGalleryInfos;
@@ -150,19 +150,27 @@ export class AdminconsoleComponent implements OnInit {
         this.imageservice
           .getImages('images/Galleries/' + galleryInfo['id'])
           .subscribe((gallery) => {
-            galleryName = galleryInfo['galleryTitle'];
-            galleryImages = [];
-            gallery.data.getImages.map((image) => {
-              galleryImages.push(image);
-            });
-            this.imagesOfGalleries.push({ galleryName, galleryImages });
+            galleryImages = gallery.data.getImages;
+            // gallery.data.getImages.map((image) => {
+            //   galleryImages.push(image);
+            // });
+            this.imagesOfGalleries.push({ galleryInfo, galleryImages });
           });
       });
     });
   }
 
-  DeleteImageFromGalleries() {}
-  UpdateImageInGallery() {}
+  DeleteImageFromGalleries(galleryInfo, image) {
+    this.imageservice
+      .deleteImage('images/Galleries/' + galleryInfo['id'] + '/', image['id'])
+      .subscribe((data) =>
+        data.data.deleteImage
+          ? 'Görsel başarı ile silindi'
+          : 'Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.'
+      );
+  }
+
+  UpdateImageInGallery(description, index, gallery) {}
   DeleteThisGallery() {}
   UpdateThisGallery() {}
 }
