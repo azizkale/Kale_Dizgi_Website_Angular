@@ -196,7 +196,15 @@ export class AdminconsoleComponent implements OnInit {
     });
   }
 
-  DeleteThisGallery() {}
+  DeleteThisGallery(gallery) {
+    this.galleryservice
+      .deleteGallery('Galleries/', gallery['id'])
+      .subscribe((data) =>
+        data.data.deleteImage
+          ? 'Galeri başarı ile silindi'
+          : 'Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.'
+      );
+  }
   UpdateThisGallery() {}
   // creates user manually
   CreateUser() {}

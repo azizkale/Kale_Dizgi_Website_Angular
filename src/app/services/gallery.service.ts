@@ -28,6 +28,11 @@ const GET_GALLERYINFOS = gql`
     }
   }
 `;
+const DELETE_GALLERY = gql`
+  mutation deleteGallery($path: String!, $id: ID!) {
+    deleteGallery(path: $path, id: $id)
+  }
+`;
 @Injectable({
   providedIn: 'root',
 })
@@ -50,5 +55,15 @@ export class GalleryService {
     return this.apollo.watchQuery<any>({
       query: GET_GALLERYINFOS,
     }).valueChanges;
+  }
+
+  deleteGallery(path: string, galleryId: any): Observable<any> {
+    return this.apollo.mutate({
+      mutation: DELETE_GALLERY,
+      variables: {
+        path: path,
+        id: galleryId,
+      },
+    });
   }
 }
