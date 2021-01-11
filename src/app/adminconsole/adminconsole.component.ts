@@ -49,8 +49,7 @@ export class AdminconsoleComponent implements OnInit {
   //Authentication=====================
   LogOut() {}
 
-  // creates user manually
-  CreateUser() {}
+  // SLİDER CRUD OPS.==========
 
   GetSliderImages() {
     this.imageService.getImages('images/slider').subscribe((data) => {
@@ -95,6 +94,18 @@ export class AdminconsoleComponent implements OnInit {
       );
   }
 
+  UpdateSliderImages(title, index, image) {
+    const updatedImage = {
+      description: title,
+      index: index,
+    };
+    this.imageService
+      .updateImage('images/slider/' + image['id'], updatedImage)
+      .subscribe((data) => {});
+  }
+
+  // IMAGES IN GALLERIES CRUD OPS.=================
+
   AddImageToGallery(url, description, galleryInfo) {
     const dateNow = new Date();
     const dateNowISO = dateNow.toDateString();
@@ -111,34 +122,6 @@ export class AdminconsoleComponent implements OnInit {
       'images/Galleries/' + galleryInfo['id'],
       newImage
     );
-  }
-
-  AddNewGallery(
-    galleryTitle,
-    fontlink,
-    fontFamily,
-    fontColor,
-    fontSize,
-    bgPhotoLink
-  ) {
-    const newGallery = {
-      // id is generated in the server
-      id: '',
-      backGroungImageUrl: bgPhotoLink,
-      fontColor: fontColor,
-      fontFamily: fontFamily,
-      fontSize: fontSize,
-      galleryTitle: galleryTitle,
-      googleFontLink: fontlink,
-    };
-    this.galleryservice.addGallery('Galleries', newGallery);
-  }
-
-  //Gallery Infos
-  GetGalleries() {
-    this.galleryservice.getGalleryInfos().subscribe((data) => {
-      this.allGalleries = data.data.getGalleryInfos;
-    });
   }
 
   GetImagesOnGalleries() {
@@ -182,6 +165,39 @@ export class AdminconsoleComponent implements OnInit {
       )
       .subscribe((data) => {});
   }
+
+  // GALLERIES CRUD OPS.
+
+  AddNewGallery(
+    galleryTitle,
+    fontlink,
+    fontFamily,
+    fontColor,
+    fontSize,
+    bgPhotoLink
+  ) {
+    const newGallery = {
+      // id is generated in the server
+      id: '',
+      backGroungImageUrl: bgPhotoLink,
+      fontColor: fontColor,
+      fontFamily: fontFamily,
+      fontSize: fontSize,
+      galleryTitle: galleryTitle,
+      googleFontLink: fontlink,
+    };
+    this.galleryservice.addGallery('Galleries', newGallery);
+  }
+
+  //Gallery Infos
+  GetGalleries() {
+    this.galleryservice.getGalleryInfos().subscribe((data) => {
+      this.allGalleries = data.data.getGalleryInfos;
+    });
+  }
+
   DeleteThisGallery() {}
   UpdateThisGallery() {}
+  // creates user manually
+  CreateUser() {}
 }

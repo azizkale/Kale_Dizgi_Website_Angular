@@ -45,7 +45,9 @@
                       delete
                     </button>
                     <button
-                      (click)="UpdateSliderImages(url.value, title.value)"
+                      (click)="
+                        UpdateSliderImages(title.value, imageIndex.value, item)
+                      "
                       class="material-icons float-right btn"
                     >
                       autorenew
@@ -75,6 +77,16 @@
                     <textarea class="w-100" #title rows="4">{{
                       item.title
                     }}</textarea>
+                    <span
+                      class="badge text-dark font-weight-bold w-75 text-left"
+                      >index no:</span
+                    >
+                    <input
+                      type="number"
+                      class="w-25"
+                      #imageIndex
+                      value="{{ item.index }}"
+                    />
                     <span
                       class="badge text-dark font-weight-bold w-75 text-left"
                       >ekleme tarihi:</span
