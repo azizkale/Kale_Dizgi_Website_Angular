@@ -284,7 +284,17 @@
                   delete
                 </button>
                 <button
-                  (click)="UpdateThisGallery()"
+                  (click)="
+                    UpdateThisGallery(
+                      galeriadi.value,
+                      fontlink.value,
+                      yazikarakteri.value,
+                      renk.value,
+                      punto.value,
+                      photo.value,
+                      item
+                    )
+                  "
                   class="material-icons float-right btn"
                 >
                   autorenew
@@ -295,10 +305,9 @@
                 <input
                   type="text"
                   class="form-control"
-                  [(ngModel)]="item['galleryTitle']"
-                  [ngModelOptions]="{ standalone: true }"
                   #galeriadi
                   placeholder="Galeri Adı"
+                  value="{{ item['galleryTitle'] }}"
                 />
               </div>
               <div class="form-group">
@@ -307,8 +316,7 @@
                   class="form-control w-100"
                   rows="4"
                   #fontlink
-                  [ngModelOptions]="{ standalone: true }"
-                  [(ngModel)]="item['googleFontLink']"
+                  value="{{ item['googleFontLink'] }}"
                 ></textarea>
               </div>
               <div class="form-group">
@@ -316,10 +324,9 @@
                 <input
                   type="text"
                   class="form-control"
-                  [ngModelOptions]="{ standalone: true }"
-                  [(ngModel)]="item['fontFamily']"
                   #yazikarakteri
                   placeholder="'family1','family2'"
+                  value="{{ item['fontFamily'] }}"
                 />
               </div>
               <div class="form-group">
@@ -329,30 +336,24 @@
                   class="form-control"
                   #renk
                   placeholder="#800000 veya blue"
-                  [ngModelOptions]="{ standalone: true }"
-                  [(ngModel)]="item['fontColor']"
+                  value="{{ item['fontColor'] }}"
                 />
               </div>
               <div class="form-group">
                 <label for="punto">Punto Büyüklüğü:</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   #punto
                   placeholder="30"
-                  [ngModelOptions]="{ standalone: true }"
-                  [(ngModel)]="item['fontSize']"
+                  value="{{ item['fontSize'] }}"
                 />
               </div>
               <div class="form-group">
                 <label for="photo">Arka Plan Görseli:</label>
-                <textarea
-                  class="form-control w-100"
-                  rows="4"
-                  #photo
-                  [ngModelOptions]="{ standalone: true }"
-                  [(ngModel)]="item['backGroungImageUrl']"
-                ></textarea>
+                <textarea class="form-control w-100" rows="4" #photo>{{
+                  item.backGroungImageUrl
+                }}</textarea>
               </div>
             </div>
           </div>

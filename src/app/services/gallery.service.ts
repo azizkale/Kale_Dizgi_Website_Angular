@@ -33,22 +33,33 @@ const DELETE_GALLERY = gql`
     deleteGallery(path: $path, id: $id)
   }
 `;
+const UPDATE_GALLERY = gql`
+  mutation updateGallery($path: String!, $gallery: String) {
+    updateGallery(path: $path, gallery: $gallery) {
+      id
+      backGroungImageUrl
+      fontColor
+      fontFamily
+      fontSize
+      galleryTitle
+      googleFontLink
+    }
+  }
+`;
 @Injectable({
   providedIn: 'root',
 })
 export class GalleryService {
   constructor(public apollo: Apollo) {}
 
-  addGallery(path: string, gallery: object) {
-    this.apollo
-      .mutate({
-        mutation: ADD_GALLERY,
-        variables: {
-          path: path,
-          gallery: JSON.stringify(gallery),
-        },
-      })
-      .subscribe();
+  addGallery(path: string, gallery: object): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ADD_GALLERY,
+      variables: {
+        path: path,
+        gallery: JSON.stringify(gallery),
+      },
+    });
   }
 
   getGalleryInfos(): Observable<any> {
@@ -63,6 +74,16 @@ export class GalleryService {
       variables: {
         path: path,
         id: galleryId,
+      },
+    });
+  }
+
+  updateGallery(path: string, gallery: object): Observable<any> {
+    return this.apollo.mutate({
+      mutation: UPDATE_GALLERY,
+      variables: {
+        path: path,
+        gallery: JSON.stringify(gallery),
       },
     });
   }

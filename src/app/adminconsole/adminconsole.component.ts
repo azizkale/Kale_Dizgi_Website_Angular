@@ -176,8 +176,8 @@ export class AdminconsoleComponent implements OnInit {
     fontSize,
     bgPhotoLink
   ) {
+    // id is generated in the server
     const newGallery = {
-      // id is generated in the server
       id: '',
       backGroungImageUrl: bgPhotoLink,
       fontColor: fontColor,
@@ -186,7 +186,9 @@ export class AdminconsoleComponent implements OnInit {
       galleryTitle: galleryTitle,
       googleFontLink: fontlink,
     };
-    this.galleryservice.addGallery('Galleries', newGallery);
+    this.galleryservice
+      .addGallery('Galleries', newGallery)
+      .subscribe((data) => {});
   }
 
   //Gallery Infos
@@ -197,15 +199,41 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   DeleteThisGallery(gallery) {
+    //deletes gallery from Galleries in DB
     this.galleryservice
       .deleteGallery('Galleries/', gallery['id'])
-      .subscribe((data) =>
-        data.data.deleteImage
-          ? 'Galeri başarı ile silindi'
-          : 'Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.'
-      );
+      .subscribe((data) => {
+        if (data.data.deleteGallery) {
+          // delete images of gallery in images node in DB
+          this.galleryservice
+            .deleteGallery('images/Galleries/', gallery['id'])
+            .subscribe();
+        }
+      });
   }
-  UpdateThisGallery() {}
+
+  UpdateThisGallery(
+    galeriadi,
+    fontlink,
+    yazikarakteri,
+    renk,
+    punto,
+    photo,
+    gallery
+  ) {
+    const updatedGallery = {
+      backGroungImageUrl: photo,
+      fontColor: renk,
+      fontFamily: yazikarakteri,
+      fontSize: punto,
+      galleryTitle: galeriadi,
+      googleFontLink: fontlink,
+    };
+    this.galleryservice
+      .updateGallery('Galleries/' + gallery['id'], updatedGallery)
+      .subscribe((data) => {});
+  }
+
   // creates user manually
   CreateUser() {}
 }
