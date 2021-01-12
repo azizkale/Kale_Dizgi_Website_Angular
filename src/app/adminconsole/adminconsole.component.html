@@ -160,9 +160,7 @@
                 <div class="card my-1 sliderCards">
                   <div class="card-header">
                     <button
-                      (click)="
-                        DeleteImageFromGalleries(gallery['galleryInfo'], image)
-                      "
+                      (click)="DeleteImageFromGalleries(gallery, image)"
                       class="material-icons float-right btn btn-danger"
                       style="font-size: xx-large"
                     >
@@ -238,7 +236,7 @@
                       AddImageToGallery(
                         newUrlG.value,
                         newTitleG.value,
-                        gallery['galleryInfo']
+                        gallery
                       );
                       newUrlG.value = '';
                       newTitleG.value = ''

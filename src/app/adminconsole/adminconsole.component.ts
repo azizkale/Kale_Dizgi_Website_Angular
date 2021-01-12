@@ -100,7 +100,6 @@ export class AdminconsoleComponent implements OnInit {
     this.imageservice
       .deleteImage('images/slider/', imageId)
       .subscribe((data) => {
-        console.log(data.data);
         // deletes images from array in frontend
         if (data.data.deleteImage) {
           const deletedImg = this.imagesSlider.find(
@@ -126,7 +125,7 @@ export class AdminconsoleComponent implements OnInit {
 
   // IMAGES IN GALLERIES CRUD OPS.=================
 
-  AddImageToGallery(url, description, galleryInfo) {
+  AddImageToGallery(url, description, gallery) {
     const dateNow = new Date();
     const dateNowISO = dateNow.toDateString();
 
@@ -138,9 +137,14 @@ export class AdminconsoleComponent implements OnInit {
       date: dateNowISO,
       index: 0,
     };
+
     this.imageservice
-      .addImage('images/Galleries/' + galleryInfo['id'], newImage)
-      .subscribe();
+      .addImage('images/Galleries/' + gallery.galleryInfo['id'], newImage)
+      .subscribe((data) => {
+        const img = data.data.addImage;
+        gallery.galleryImages = Object.assign([], gallery.galleryImages);
+        gallery.galleryImages.push(img);
+      });
   }
 
   GetImagesOnGalleries() {
@@ -160,16 +164,28 @@ export class AdminconsoleComponent implements OnInit {
           });
       });
     });
+    console.log(this.imagesOfGalleries);
   }
 
-  DeleteImageFromGalleries(galleryInfo, image) {
+  DeleteImageFromGalleries(gallery, image) {
     this.imageservice
-      .deleteImage('images/Galleries/' + galleryInfo['id'] + '/', image['id'])
-      .subscribe((data) =>
-        data.data.deleteImage
-          ? 'Görsel başarı ile silindi'
-          : 'Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.'
-      );
+      .deleteImage(
+        'images/Galleries/' + gallery.galleryInfo['id'] + '/',
+        image['id']
+      )
+      .subscribe((data) => {
+        // deletes images from array in frontend
+        if (data.data.deleteImage) {
+          const deletedImg = this.imagesSlider.find(
+            (img) => img['id'] === image['id']
+          );
+          const index = gallery.galleryImages.indexOf(deletedImg);
+          gallery.galleryImages = Object.assign([], gallery.galleryImages);
+          gallery.galleryImages.splice(index, 1);
+        } else {
+          ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
+        }
+      });
   }
 
   UpdateImageInGallery(description, index, gallery, image) {
