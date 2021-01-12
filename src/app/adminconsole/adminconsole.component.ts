@@ -81,17 +81,37 @@ export class AdminconsoleComponent implements OnInit {
       date: dateNowISO,
       index: 0,
     };
-    this.imageservice.addImage('images/slider', newImage);
+    this.imageservice.addImage('images/slider', newImage).subscribe((data) => {
+      const img = data.data.addImage;
+      const obj = {
+        image: img.url,
+        thumbImage: img.url,
+        alt: img.description,
+        title: img.description,
+        date: img.date,
+        index: img.index,
+        id: img.id,
+      };
+      this.imagesSlider.push(obj);
+    });
   }
 
   DeleteImagesOfSlider(imageId) {
     this.imageservice
       .deleteImage('images/slider/', imageId)
-      .subscribe((data) =>
-        data.data.deleteImage
-          ? 'Görsel başarı ile silindi'
-          : 'Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.'
-      );
+      .subscribe((data) => {
+        console.log(data.data);
+        // deletes images from array in frontend
+        if (data.data.deleteImage) {
+          const deletedImg = this.imagesSlider.find(
+            (img) => img['id'] === imageId
+          );
+          const index = this.imagesSlider.indexOf(deletedImg);
+          this.imagesSlider.splice(index, 1);
+        } else {
+          ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
+        }
+      });
   }
 
   UpdateSliderImages(title, index, image) {
@@ -118,10 +138,9 @@ export class AdminconsoleComponent implements OnInit {
       date: dateNowISO,
       index: 0,
     };
-    this.imageservice.addImage(
-      'images/Galleries/' + galleryInfo['id'],
-      newImage
-    );
+    this.imageservice
+      .addImage('images/Galleries/' + galleryInfo['id'], newImage)
+      .subscribe();
   }
 
   GetImagesOnGalleries() {

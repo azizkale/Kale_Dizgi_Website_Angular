@@ -56,16 +56,14 @@ export class ImageService {
     }).valueChanges;
   }
 
-  addImage(path: string, image: object) {
-    this.apollo
-      .mutate({
-        mutation: ADD_IMAGE,
-        variables: {
-          path: path,
-          image: JSON.stringify(image),
-        },
-      })
-      .subscribe();
+  addImage(path: string, image: object): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ADD_IMAGE,
+      variables: {
+        path: path,
+        image: JSON.stringify(image),
+      },
+    });
   }
 
   deleteImage(path: string, imageId: any): Observable<any> {
