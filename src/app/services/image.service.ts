@@ -3,19 +3,20 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 
 const GET_IMAGE = gql`
-  query getImages($path: String!) {
-    getImages(path: $path) {
+  query getImages($galleryID: String!) {
+    getImages(galleryID: $galleryID) {
       id
       url
       description
       date
       index
+      galleryId
     }
   }
 `;
 const ADD_IMAGE = gql`
-  mutation addImage($path: String, $image: String) {
-    addImage(path: $path, image: $image) {
+  mutation addImage($image: String) {
+    addImage(image: $image) {
       id
       url
       description
@@ -47,20 +48,19 @@ const UPPDATE_IMAGE = gql`
 export class ImageService {
   constructor(public apollo: Apollo) {}
 
-  getImages(path: string): Observable<any> {
+  getImages(galleryID: string): Observable<any> {
     return this.apollo.watchQuery<any>({
       query: GET_IMAGE,
       variables: {
-        path: path,
+        galleryID: galleryID,
       },
     }).valueChanges;
   }
 
-  addImage(path: string, image: object): Observable<any> {
+  addImage(image: object): Observable<any> {
     return this.apollo.mutate({
       mutation: ADD_IMAGE,
       variables: {
-        path: path,
         image: JSON.stringify(image),
       },
     });

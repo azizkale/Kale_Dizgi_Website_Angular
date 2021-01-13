@@ -52,7 +52,8 @@ export class AdminconsoleComponent implements OnInit {
   // SLİDER CRUD OPS.==========
 
   GetSliderImages() {
-    this.imageService.getImages('images/slider').subscribe((data) => {
+    this.imageService.getImages('slider').subscribe((data) => {
+      console.log(data);
       data.data.getImages.map((img) => {
         const obj = {
           image: img.url,
@@ -73,14 +74,13 @@ export class AdminconsoleComponent implements OnInit {
     const dateNowISO = dateNow.toDateString();
 
     const newImage = {
-      // id is generated in the server
-      id: '',
       url: url,
       description: description,
       date: dateNowISO,
       index: 0,
+      galleryId: 'slider',
     };
-    this.imageservice.addImage('images/slider', newImage).subscribe((data) => {
+    this.imageservice.addImage(newImage).subscribe((data) => {
       const img = data.data.addImage;
       const obj = {
         image: img.url,
@@ -129,35 +129,28 @@ export class AdminconsoleComponent implements OnInit {
     const dateNowISO = dateNow.toDateString();
 
     const newImage = {
-      // id is generated in the server
-      id: '',
       url: url,
       description: description,
       date: dateNowISO,
       index: 0,
+      galleryId: gallery.galleryInfo['id'],
     };
 
-    this.imageservice
-      .addImage('images/Galleries/' + gallery.galleryInfo['id'], newImage)
-      .subscribe((data) => {
-        const img = data.data.addImage;
-        gallery.galleryImages = Object.assign([], gallery.galleryImages);
-        gallery.galleryImages.push(img);
-      });
+    this.imageservice.addImage(newImage).subscribe((data) => {
+      // const img = data.data.addImage;
+      // gallery.galleryImages = Object.assign([], gallery.galleryImages);
+      // gallery.galleryImages.push(img);
+    });
   }
 
   GetImagesOnGalleries() {
-    let galleryImages;
-
+    let galleryImages = [];
     this.galleryservice.getGalleryInfos().subscribe((data) => {
-      this.allGalleries = data.data.getGalleryInfos;
-      this.allGalleries.map((galleryInfo) => {
-        this.imageservice
-          .getImages('images/Galleries/' + galleryInfo['id'])
-          .subscribe((gallery) => {
-            galleryImages = gallery.data.getImages;
-            this.imagesOfGalleries.push({ galleryInfo, galleryImages });
-          });
+      data.data.getGalleryInfos.map((galleryInfo) => {
+        this.imageservice.getImages(galleryInfo['id']).subscribe((data) => {
+          galleryImages = data.data.getImages;
+          this.imagesOfGalleries.push({ galleryInfo, galleryImages });
+        });
       });
     });
   }
@@ -216,14 +209,12 @@ export class AdminconsoleComponent implements OnInit {
       galleryTitle: galleryTitle,
       googleFontLink: fontlink,
     };
-    this.galleryservice
-      .addGallery('Galleries', newGallery)
-      .subscribe((data) => {
-        if (data) {
-          this.allGalleries = Object.assign([], this.allGalleries);
-          this.allGalleries.push(data.data.addGallery);
-        }
-      });
+    this.galleryservice.addGallery(newGallery).subscribe((data) => {
+      if (data) {
+        this.allGalleries = Object.assign([], this.allGalleries);
+        this.allGalleries.push(data.data.addGallery);
+      }
+    });
   }
 
   DeleteThisGallery(galleryInfo) {

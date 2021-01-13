@@ -16,7 +16,7 @@ export class SliderComponent implements OnInit {
   }
 
   GetSliderImages() {
-    this.imageService.getImages('images/slider').subscribe((data) => {
+    this.imageService.getImages('slider').subscribe((data) => {
       data.data.getImages.map((img) => {
         const obj = {
           image: img.url,

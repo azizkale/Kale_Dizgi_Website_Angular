@@ -3,4 +3,6 @@ export class Image {
   date: string;
   description: string;
   index: number;
+  galleryId: string | number;
+  url: string;
 }

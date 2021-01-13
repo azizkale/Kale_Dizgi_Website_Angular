@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 
 const ADD_GALLERY = gql`
-  mutation addGallery($path: String!, $gallery: String!) {
-    addGallery(path: $path, gallery: $gallery) {
+  mutation addGallery($gallery: String!) {
+    addGallery(gallery: $gallery) {
       id
       backGroungImageUrl
       fontColor
@@ -52,11 +52,10 @@ const UPDATE_GALLERY = gql`
 export class GalleryService {
   constructor(public apollo: Apollo) {}
 
-  addGallery(path: string, gallery: object): Observable<any> {
+  addGallery(gallery: object): Observable<any> {
     return this.apollo.mutate({
       mutation: ADD_GALLERY,
       variables: {
-        path: path,
         gallery: JSON.stringify(gallery),
       },
     });
