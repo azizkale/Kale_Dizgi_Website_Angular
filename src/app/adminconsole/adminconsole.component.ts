@@ -116,8 +116,12 @@ export class AdminconsoleComponent implements OnInit {
       index: index,
     };
     this.imageService
-      .updateImage('images/slider/' + image['id'], updatedImage)
-      .subscribe((data) => {});
+      .updateImage(image['id'], updatedImage)
+      .subscribe((data) => {
+        if (data.data.updateImage != null) {
+          alert('Görsel başarı ile güncellendi.');
+        }
+      });
   }
 
   // IMAGES IN GALLERIES CRUD OPS.=================
@@ -171,17 +175,18 @@ export class AdminconsoleComponent implements OnInit {
     });
   }
 
-  UpdateImageInGallery(description, index, gallery, image) {
+  UpdateImageInGallery(description, index, image) {
     const updatedImage = {
       description: description,
       index: index,
     };
     this.imageService
-      .updateImage(
-        'images/Galleries/' + gallery['id'] + '/' + image['id'],
-        updatedImage
-      )
-      .subscribe((data) => {});
+      .updateImage(image['id'], updatedImage)
+      .subscribe((data) => {
+        if (data.data.updateImage != null) {
+          alert('Görsel başarı ile güncellendi.');
+        }
+      });
   }
 
   // GALLERIES CRUD OPS.
@@ -246,8 +251,12 @@ export class AdminconsoleComponent implements OnInit {
       googleFontLink: fontlink,
     };
     this.galleryservice
-      .updateGallery('Galleries/' + gallery['id'], updatedGallery)
-      .subscribe((data) => {});
+      .updateGallery(gallery['id'], updatedGallery)
+      .subscribe((data) => {
+        if (data.data.updateGallery != null) {
+          alert('Galeri başarı ile güncellendi.');
+        }
+      });
   }
 
   // creates user manually

@@ -31,8 +31,8 @@ const DELETE_IMAGE = gql`
   }
 `;
 const UPPDATE_IMAGE = gql`
-  mutation updateImage($path: String!, $image: String!) {
-    updateImage(path: $path, image: $image) {
+  mutation updateImage($id: ID!, $image: String!) {
+    updateImage(id: $id, image: $image) {
       id
       description
       date
@@ -75,11 +75,11 @@ export class ImageService {
     });
   }
 
-  updateImage(path: string, image: object): Observable<any> {
+  updateImage(id: any, image: object): Observable<any> {
     return this.apollo.mutate({
       mutation: UPPDATE_IMAGE,
       variables: {
-        path: path,
+        id: id,
         image: JSON.stringify(image),
       },
     });

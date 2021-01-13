@@ -34,8 +34,8 @@ const DELETE_GALLERY = gql`
   }
 `;
 const UPDATE_GALLERY = gql`
-  mutation updateGallery($path: String!, $gallery: String) {
-    updateGallery(path: $path, gallery: $gallery) {
+  mutation updateGallery($id: ID!, $gallery: String) {
+    updateGallery(id: $id, gallery: $gallery) {
       id
       backGroungImageUrl
       fontColor
@@ -76,11 +76,11 @@ export class GalleryService {
     });
   }
 
-  updateGallery(path: string, gallery: object): Observable<any> {
+  updateGallery(id: any, gallery: object): Observable<any> {
     return this.apollo.mutate({
       mutation: UPDATE_GALLERY,
       variables: {
-        path: path,
+        id: id,
         gallery: JSON.stringify(gallery),
       },
     });
