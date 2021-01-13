@@ -26,8 +26,8 @@ const ADD_IMAGE = gql`
   }
 `;
 const DELETE_IMAGE = gql`
-  mutation deleteImage($path: String!, $id: ID!) {
-    deleteImage(path: $path, id: $id)
+  mutation deleteImage($id: ID!) {
+    deleteImage(id: $id)
   }
 `;
 const UPPDATE_IMAGE = gql`
@@ -66,11 +66,10 @@ export class ImageService {
     });
   }
 
-  deleteImage(path: string, imageId: any): Observable<any> {
+  deleteImage(imageId: any): Observable<any> {
     return this.apollo.mutate({
       mutation: DELETE_IMAGE,
       variables: {
-        path: path,
         id: imageId,
       },
     });

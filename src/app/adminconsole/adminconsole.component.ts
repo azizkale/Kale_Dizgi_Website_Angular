@@ -96,20 +96,18 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   DeleteImagesOfSlider(imageId) {
-    this.imageservice
-      .deleteImage('images/slider/', imageId)
-      .subscribe((data) => {
-        // deletes images from array in frontend
-        if (data.data.deleteImage) {
-          const deletedImg = this.imagesSlider.find(
-            (img) => img['id'] === imageId
-          );
-          const index = this.imagesSlider.indexOf(deletedImg);
-          this.imagesSlider.splice(index, 1);
-        } else {
-          ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
-        }
-      });
+    this.imageservice.deleteImage(imageId).subscribe((data) => {
+      // deletes images from array in frontend
+      if (data.data.deleteImage === '1') {
+        const deletedImg = this.imagesSlider.find(
+          (img) => img['id'] === imageId
+        );
+        const index = this.imagesSlider.indexOf(deletedImg);
+        this.imagesSlider.splice(index, 1);
+      } else {
+        ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
+      }
+    });
   }
 
   UpdateSliderImages(title, index, image) {
@@ -137,15 +135,16 @@ export class AdminconsoleComponent implements OnInit {
     };
 
     this.imageservice.addImage(newImage).subscribe((data) => {
-      // const img = data.data.addImage;
-      // gallery.galleryImages = Object.assign([], gallery.galleryImages);
-      // gallery.galleryImages.push(img);
+      const img = data.data.addImage;
+      gallery.galleryImages = Object.assign([], gallery.galleryImages);
+      gallery.galleryImages.push(img);
     });
   }
 
   GetImagesOnGalleries() {
     let galleryImages = [];
     this.galleryservice.getGalleryInfos().subscribe((data) => {
+      this.allGalleries = data.data.getGalleryInfos;
       data.data.getGalleryInfos.map((galleryInfo) => {
         this.imageservice.getImages(galleryInfo['id']).subscribe((data) => {
           galleryImages = data.data.getImages;
@@ -153,27 +152,23 @@ export class AdminconsoleComponent implements OnInit {
         });
       });
     });
+    console.log(this.imagesOfGalleries);
   }
 
   DeleteImageFromGalleries(gallery, image) {
-    this.imageservice
-      .deleteImage(
-        'images/Galleries/' + gallery.galleryInfo['id'] + '/',
-        image['id']
-      )
-      .subscribe((data) => {
-        // deletes images from array in frontend
-        if (data.data.deleteImage) {
-          const deletedImg = this.imagesSlider.find(
-            (img) => img['id'] === image['id']
-          );
-          const index = gallery.galleryImages.indexOf(deletedImg);
-          gallery.galleryImages = Object.assign([], gallery.galleryImages);
-          gallery.galleryImages.splice(index, 1);
-        } else {
-          ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
-        }
-      });
+    this.imageservice.deleteImage(image['id']).subscribe((data) => {
+      // deletes images from array in frontend
+      if (data.data.deleteImage === '1') {
+        const deletedImg = this.imagesSlider.find(
+          (img) => img['id'] === image['id']
+        );
+        const index = gallery.galleryImages.indexOf(deletedImg);
+        gallery.galleryImages = Object.assign([], gallery.galleryImages);
+        gallery.galleryImages.splice(index, 1);
+      } else {
+        ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
+      }
+    });
   }
 
   UpdateImageInGallery(description, index, gallery, image) {
@@ -219,25 +214,18 @@ export class AdminconsoleComponent implements OnInit {
 
   DeleteThisGallery(galleryInfo) {
     // deletes gallery from Galleries in DB
-    this.galleryservice
-      .deleteGallery('Galleries/', galleryInfo['id'])
-      .subscribe((data) => {
-        if (data.data.deleteGallery) {
-          // deletes gallery from DOM
-          const deletedGallery = this.imagesOfGalleries.find((gal) => {
-            gal.galleryInfo['id'] == galleryInfo['id'];
-            console.log(gal.galleryInfo['id']);
-            console.log(galleryInfo['id']);
-          });
+    this.galleryservice.deleteGallery(galleryInfo['id']).subscribe((data) => {
+      if (data.data.deleteGallery === '1') {
+        // deletes gallery from DOM
 
-          const index = this.imagesOfGalleries.indexOf(deletedGallery);
-          this.imagesOfGalleries = Object.assign([], this.imagesOfGalleries);
-          this.imagesOfGalleries.splice(index, 1);
-          // deletes images of the gallery from DOM
-        } else {
-          ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
-        }
-      });
+        const index = this.allGalleries.indexOf(galleryInfo);
+        this.allGalleries = Object.assign([], this.allGalleries);
+        this.allGalleries.splice(index, 1);
+        // deletes images of the gallery from DOM
+      } else {
+        ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
+      }
+    });
   }
 
   UpdateThisGallery(

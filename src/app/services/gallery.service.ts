@@ -29,8 +29,8 @@ const GET_GALLERYINFOS = gql`
   }
 `;
 const DELETE_GALLERY = gql`
-  mutation deleteGallery($path: String!, $id: ID!) {
-    deleteGallery(path: $path, id: $id)
+  mutation deleteGallery($id: ID!) {
+    deleteGallery(id: $id)
   }
 `;
 const UPDATE_GALLERY = gql`
@@ -67,11 +67,10 @@ export class GalleryService {
     }).valueChanges;
   }
 
-  deleteGallery(path: string, galleryId: any): Observable<any> {
+  deleteGallery(galleryId: any): Observable<any> {
     return this.apollo.mutate({
       mutation: DELETE_GALLERY,
       variables: {
-        path: path,
         id: galleryId,
       },
     });
