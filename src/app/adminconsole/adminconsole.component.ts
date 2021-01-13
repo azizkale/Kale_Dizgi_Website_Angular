@@ -30,7 +30,7 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.GetGalleries();
+    // this.GetGalleries();
     this.GetImagesOnGalleries();
     this.GetSliderImages();
     this._loginControl = true;
@@ -66,7 +66,6 @@ export class AdminconsoleComponent implements OnInit {
         this.imagesSlider.push(obj);
       });
     });
-    console.log(this.imagesSlider);
   }
 
   AddImageToSlider(url, description) {
@@ -157,14 +156,10 @@ export class AdminconsoleComponent implements OnInit {
           .getImages('images/Galleries/' + galleryInfo['id'])
           .subscribe((gallery) => {
             galleryImages = gallery.data.getImages;
-            // gallery.data.getImages.map((image) => {
-            //   galleryImages.push(image);
-            // });
             this.imagesOfGalleries.push({ galleryInfo, galleryImages });
           });
       });
     });
-    console.log(this.imagesOfGalleries);
   }
 
   DeleteImageFromGalleries(gallery, image) {
@@ -223,26 +218,33 @@ export class AdminconsoleComponent implements OnInit {
     };
     this.galleryservice
       .addGallery('Galleries', newGallery)
-      .subscribe((data) => {});
+      .subscribe((data) => {
+        if (data) {
+          this.allGalleries = Object.assign([], this.allGalleries);
+          this.allGalleries.push(data.data.addGallery);
+        }
+      });
   }
 
-  //Gallery Infos
-  GetGalleries() {
-    this.galleryservice.getGalleryInfos().subscribe((data) => {
-      this.allGalleries = data.data.getGalleryInfos;
-    });
-  }
-
-  DeleteThisGallery(gallery) {
-    //deletes gallery from Galleries in DB
+  DeleteThisGallery(galleryInfo) {
+    // deletes gallery from Galleries in DB
     this.galleryservice
-      .deleteGallery('Galleries/', gallery['id'])
+      .deleteGallery('Galleries/', galleryInfo['id'])
       .subscribe((data) => {
         if (data.data.deleteGallery) {
-          // delete images of gallery in images node in DB
-          this.galleryservice
-            .deleteGallery('images/Galleries/', gallery['id'])
-            .subscribe();
+          // deletes gallery from DOM
+          const deletedGallery = this.imagesOfGalleries.find((gal) => {
+            gal.galleryInfo['id'] == galleryInfo['id'];
+            console.log(gal.galleryInfo['id']);
+            console.log(galleryInfo['id']);
+          });
+
+          const index = this.imagesOfGalleries.indexOf(deletedGallery);
+          this.imagesOfGalleries = Object.assign([], this.imagesOfGalleries);
+          this.imagesOfGalleries.splice(index, 1);
+          // deletes images of the gallery from DOM
+        } else {
+          ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
         }
       });
   }
