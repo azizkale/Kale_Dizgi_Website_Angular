@@ -156,7 +156,6 @@ export class AdminconsoleComponent implements OnInit {
         });
       });
     });
-    console.log(this.imagesOfGalleries);
   }
 
   DeleteImageFromGalleries(gallery, image) {
