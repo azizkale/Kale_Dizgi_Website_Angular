@@ -162,7 +162,7 @@ export class AdminconsoleComponent implements OnInit {
     this.imageservice.deleteImage(image['id']).subscribe((data) => {
       // deletes images from array in frontend
       if (data.data.deleteImage === '1') {
-        const deletedImg = this.imagesSlider.find(
+        const deletedImg = gallery.galleryImages.find(
           (img) => img['id'] === image['id']
         );
         const index = gallery.galleryImages.indexOf(deletedImg);
@@ -260,4 +260,13 @@ export class AdminconsoleComponent implements OnInit {
 
   // creates user manually
   CreateUser() {}
+
+  // toggle for deletings
+  toggleWithGreeting(popover) {
+    if (popover.isOpen()) {
+      popover.close();
+    } else {
+      popover.open();
+    }
+  }
 }

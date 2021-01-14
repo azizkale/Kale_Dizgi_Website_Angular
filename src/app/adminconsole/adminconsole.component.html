@@ -38,12 +38,32 @@
               <div class="col-sm-3" *ngFor="let item of imagesSlider">
                 <div class="card my-1 sliderCards">
                   <div class="card-header">
+                    <!-- popover for deleting beginning -->
+                    <ng-template #popContent let-greeting="greeting">
+                      <button
+                        class="btn btn-danger col-5 mr-1"
+                        (click)="DeleteImagesOfSlider(item.id)"
+                      >
+                        Sil
+                      </button>
+                      <button class="btn btn-primary col-5 ml-1">iptal</button>
+                    </ng-template>
+                    <ng-template #popTitle>
+                      <b>Görseli silmek üzeresiniz.</b>
+                    </ng-template>
                     <button
-                      (click)="DeleteImagesOfSlider(item.id)"
+                      type="button"
+                      class="btn btn-outline-secondary mr-2"
+                      [ngbPopover]="popContent"
+                      [popoverTitle]="popTitle"
+                      triggers="manual"
+                      #p1="ngbPopover"
+                      (click)="toggleWithGreeting(p1)"
                       class="material-icons float-right btn btn-danger"
                     >
                       delete
                     </button>
+                    <!-- popover for deleting end -->
                     <button
                       (click)="
                         UpdateSliderImages(title.value, imageIndex.value, item)
@@ -159,13 +179,39 @@
               >
                 <div class="card my-1 sliderCards">
                   <div class="card-header">
-                    <button
+                    <!-- <button
                       (click)="DeleteImageFromGalleries(gallery, image)"
                       class="material-icons float-right btn btn-danger"
                       style="font-size: xx-large"
                     >
                       delete
+                    </button> -->
+                    <!-- popover for deleting beginning -->
+                    <ng-template #popContent let-greeting="greeting">
+                      <button
+                        class="btn btn-danger col-5 mr-1"
+                        (click)="DeleteImageFromGalleries(gallery, image)"
+                      >
+                        Sil
+                      </button>
+                      <button class="btn btn-primary col-5 ml-1">iptal</button>
+                    </ng-template>
+                    <ng-template #popTitle>
+                      <b>Görseli silmek üzeresiniz.</b>
+                    </ng-template>
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary mr-2"
+                      [ngbPopover]="popContent"
+                      [popoverTitle]="popTitle"
+                      triggers="manual"
+                      #p1="ngbPopover"
+                      (click)="toggleWithGreeting(p1)"
+                      class="material-icons float-right btn btn-danger"
+                    >
+                      delete
                     </button>
+                    <!-- popover for deleting end -->
                     <button
                       (click)="
                         UpdateImageInGallery(
