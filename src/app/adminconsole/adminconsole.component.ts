@@ -30,7 +30,6 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.GetGalleries();
     this.GetImagesOnGalleries();
     this.GetSliderImages();
     this._loginControl = true;
