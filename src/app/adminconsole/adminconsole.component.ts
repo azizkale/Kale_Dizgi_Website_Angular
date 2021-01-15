@@ -10,16 +10,13 @@ export class AdminconsoleComponent implements OnInit {
   // imagesSlider: Array<object> = [];
 
   allMessages: Array<object> = [];
-
   _loginControl: boolean;
-  shw: boolean;
 
   constructor(public commonservice: CommonService) {}
 
   ngOnInit(): void {
     this.getAllMessages();
     this._loginControl = true;
-    this.shw = true;
   }
 
   //Authentication=====================

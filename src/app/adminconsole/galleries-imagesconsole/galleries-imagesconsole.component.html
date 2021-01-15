@@ -1,14 +1,5 @@
 <accordion-group *ngFor="let gallery of imagesOfGalleries; let i = index">
-  <button
-    type="button"
-    class="btn btn-default btn-lg w-100"
-    accordion-heading
-    (click)="shw = !shw"
-  >
-    <span class="material-icons float-left" *ngIf="!shw">
-      arrow_circle_down
-    </span>
-    <span class="material-icons float-left" *ngIf="shw"> arrow_circle_up </span>
+  <button type="button" class="btn btn-default btn-lg w-100" accordion-heading>
     <span class="float-left mx-3">
       <h4>{{ gallery["galleryInfo"]["galleryTitle"] }}</h4>
     </span>
