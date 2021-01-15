@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-contact',
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ContactComponent implements OnInit {
   angForm: FormGroup;
-  constructor(public fb: FormBuilder) {
+  constructor(public fb: FormBuilder, public commonservice: CommonService) {
     this.createForm();
   }
 
@@ -22,17 +23,16 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  Submit(name, mail, message) {
+  addMessage(name, mail, message) {
     let dateNow = new Date();
     let dateNowISO = dateNow.toDateString();
 
     let obj = {
-      gonderenIsim: name,
-      mailAdress: mail,
-      gondermeTarihi: dateNowISO,
-      Message: message,
+      name: name,
+      mail: mail,
+      date: dateNowISO,
+      message: message,
     };
-
-    // this.serviceFireBase.SendMessageToDB(obj);
+    this.commonservice.addMessage(obj);
   }
 }

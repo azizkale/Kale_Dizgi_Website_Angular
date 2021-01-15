@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GalleryService } from '../services/gallery.service';
 import { ImageService } from '../services/image.service';
 import { Router } from '@angular/router';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-adminconsole',
@@ -24,6 +25,7 @@ export class AdminconsoleComponent implements OnInit {
     public imageservice: ImageService,
     public galleryservice: GalleryService,
     public imageService: ImageService,
+    public commonservice: CommonService,
     public router: Router
   ) {
     this.createNewGalleryForm();
@@ -256,6 +258,8 @@ export class AdminconsoleComponent implements OnInit {
         }
       });
   }
+
+  // Messages ====================
 
   // creates user manually
   CreateUser() {}
