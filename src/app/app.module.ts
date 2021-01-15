@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SliderconsoleComponent } from './adminconsole/sliderconsole/sliderconsole.component';
 import { GalleriesinfoconsoleComponent } from './adminconsole/galleriesinfoconsole/galleriesinfoconsole.component';
+import { GalleriesImagesconsoleComponent } from './adminconsole/galleries-imagesconsole/galleries-imagesconsole.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { GalleriesinfoconsoleComponent } from './adminconsole/galleriesinfoconso
     SliderComponent,
     SliderconsoleComponent,
     GalleriesinfoconsoleComponent,
+    GalleriesImagesconsoleComponent,
   ],
   imports: [
     BrowserModule,

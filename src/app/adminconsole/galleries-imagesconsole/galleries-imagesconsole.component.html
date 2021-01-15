@@ -1,21 +1,25 @@
-<!-- Images in Slider -->
-<accordion-group>
+<accordion-group *ngFor="let gallery of imagesOfGalleries; let i = index">
   <button
     type="button"
     class="btn btn-default btn-lg w-100"
     accordion-heading
-    (click)="deg = !deg"
+    (click)="shw = !shw"
   >
-    <span class="material-icons float-left" *ngIf="!deg">
+    <span class="material-icons float-left" *ngIf="!shw">
       arrow_circle_down
     </span>
-    <span class="material-icons float-left" *ngIf="deg"> arrow_circle_up </span>
+    <span class="material-icons float-left" *ngIf="shw"> arrow_circle_up </span>
     <span class="float-left mx-3">
-      <h4>Slider</h4>
+      <h4>{{ gallery["galleryInfo"]["galleryTitle"] }}</h4>
     </span>
   </button>
-  <div class="row slider">
-    <div class="col-sm-3" *ngFor="let item of imagesSlider">
+
+  <!-- Images of Galleries -->
+  <div class="row">
+    <div
+      class="col-sm-3"
+      *ngFor="let image of gallery['galleryImages']; let j = index"
+    >
       <div class="card my-1 sliderCards">
         <div class="card-header">
           <!-- popover for deleting beginning -->
@@ -23,7 +27,7 @@
             <div class="text-center">
               <button
                 class="btn btn-danger col-5 mr-1"
-                (click)="DeleteImagesOfSlider(item.id)"
+                (click)="DeleteImageFromGalleries(gallery, image)"
               >
                 Sil
               </button>
@@ -31,7 +35,7 @@
             </div>
           </ng-template>
           <ng-template #popTitle>
-            <b>Görseli silmek üzeresiniz!</b>
+            <b>Görseli silmek üzeresiniz.</b>
           </ng-template>
           <button
             type="button"
@@ -47,8 +51,15 @@
           </button>
           <!-- popover for deleting end -->
           <button
-            (click)="UpdateSliderImages(title.value, imageIndex.value, item)"
+            (click)="
+              UpdateImageInGallery(
+                imageDescription.value,
+                imageIndex.value,
+                image
+              )
+            "
             class="material-icons float-right btn"
+            style="font-size: xx-large"
           >
             autorenew
           </button>
@@ -57,9 +68,9 @@
           <div class="text-center">
             <img
               class="img-fluid"
-              [src]="item.image"
+              [src]="image['url']"
               style="height: 200px; width: 150px; margin: 0 auto"
-              [alt]="item.alt"
+              alt="image['description']"
             />
           </div>
           <span
@@ -67,13 +78,15 @@
             class="badge text-dark font-weight-bold w-75 text-left"
             >url:</span
           >
-          <textarea [hidden]="true" class="w-100" #url rows="4">{{
-            item.url
+          <textarea disabled [hidden]="true" class="w-100" rows="4">{{
+            image["url"]
           }}</textarea>
           <span class="badge text-dark font-weight-bold w-75 text-left"
             >açıklama:</span
           >
-          <textarea class="w-100" #title rows="4">{{ item.title }}</textarea>
+          <textarea class="w-100" #imageDescription rows="4">{{
+            image["description"]
+          }}</textarea>
           <span class="badge text-dark font-weight-bold w-75 text-left"
             >index no:</span
           >
@@ -81,27 +94,28 @@
             type="number"
             class="w-25"
             #imageIndex
-            value="{{ item.index }}"
+            value="{{ image['index'] }}"
           />
           <span class="badge text-dark font-weight-bold w-75 text-left"
             >ekleme tarihi:</span
           >
-          <label class="" for=" ">{{ item.date | date: "dd/MM/yyyy" }}</label>
+          <label class="" for=" ">{{
+            image["date"] | date: "dd/MM/yyyy"
+          }}</label>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Adding new photo -->
+  <!-- Adding new photo to a Gallery -->
   <div class="col-sm-3 bg-success py-2 mt-2 rounded shadowcss">
     <div class="card my-2">
       <div class="card-header">
         <span class="float-left font-weight-bold">Yeni Görsel:</span>
         <button
           (click)="
-            AddImageToSlider(newUrl.value, newTitle.value);
-            newUrl.value = '';
-            newTitle.value = ''
+            AddImageToGallery(newUrlG.value, newTitleG.value, gallery);
+            newUrlG.value = '';
+            newTitleG.value = ''
           "
           class="material-icons float-right btn"
         >
@@ -111,11 +125,11 @@
       <div class="card-body">
         <span class="badge text-dark font-weight-bold w-75 text-left">url:</span
         ><br />
-        <textarea class="w-100 mb-1" #newUrl rows="4"></textarea><br />
+        <textarea class="w-100 mb-1" #newUrlG rows="4 "></textarea><br />
         <span class="badge text-dark font-weight-bold w-75 text-left"
           >açıklama:</span
         ><br />
-        <textarea class="w-100 mb-1" #newTitle rows="4"></textarea>
+        <textarea class="w-100 mb-1" #newTitleG rows=" 4 "></textarea>
       </div>
     </div>
   </div>
