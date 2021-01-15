@@ -15,7 +15,7 @@ export class AdminconsoleComponent implements OnInit {
   imagesOfGalleries: Array<any> = [];
   allGalleries: Array<object> = [];
   newGalleryForm: FormGroup;
-  allMessages: Array<object>;
+  allMessages: Array<object> = [];
 
   _loginControl: boolean;
   shw: boolean;
@@ -34,6 +34,7 @@ export class AdminconsoleComponent implements OnInit {
   ngOnInit(): void {
     this.GetImagesOnGalleries();
     this.GetSliderImages();
+    this.getAllMessages();
     this._loginControl = true;
     this.shw = true;
   }
@@ -260,12 +261,25 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   // Messages ====================
+  getAllMessages() {
+    this.commonservice.getAllMessages().subscribe((data) => {
+      data.data.getMessages.map((msg) => {
+        this.allMessages.push(msg);
+      });
+    });
+  }
 
+  deleteMessage(id) {
+    console.log('id: ' + id);
+    this.commonservice.deleteMessage(id).subscribe((data) => {
+      console.log(data);
+    });
+  }
   // creates user manually
   CreateUser() {}
 
   // toggle for deletings
-  toggleWithGreeting(popover) {
+  deletingPopoverToggle(popover) {
     if (popover.isOpen()) {
       popover.close();
     } else {

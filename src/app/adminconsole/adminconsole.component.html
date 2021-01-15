@@ -62,7 +62,7 @@
                       [popoverTitle]="popTitle"
                       triggers="manual"
                       #p1="ngbPopover"
-                      (click)="toggleWithGreeting(p1)"
+                      (click)="deletingPopoverToggle(p1)"
                       class="material-icons float-right btn btn-danger"
                     >
                       delete
@@ -207,7 +207,7 @@
                       [popoverTitle]="popTitle"
                       triggers="manual"
                       #p1="ngbPopover"
-                      (click)="toggleWithGreeting(p1)"
+                      (click)="deletingPopoverToggle(p1)"
                       class="material-icons float-right btn btn-danger"
                     >
                       delete
@@ -343,7 +343,7 @@
                   [popoverTitle]="popTitle"
                   triggers="manual"
                   #p1="ngbPopover"
-                  (click)="toggleWithGreeting(p1)"
+                  (click)="deletingPopoverToggle(p1)"
                   class="material-icons float-right btn btn-danger"
                 >
                   delete
@@ -529,6 +529,72 @@
         </form>
       </accordion-group>
       <!-- MESSAGES FROM CUSTOMERS CONTROL -->
+      <accordion-group>
+        <h3 accordion-heading>Müşteri Mesajları</h3>
+        <form>
+          <div class="row">
+            <table class="table">
+              <thead>
+                <!-- <th>ID</th> -->
+                <th>Gönderen Kişi</th>
+                <th>Gönderme Tarihi</th>
+                <th>İletişim Bilgisi</th>
+                <th>Mesajı</th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of allMessages">
+                  <td>{{ item["name"] }}</td>
+                  <td>
+                    {{ item["date"] | date: "dd/MM/yyyy" }}
+                  </td>
+                  <td>{{ item["mail"] }}</td>
+                  <td>{{ item["message"] }}</td>
+
+                  <td>
+                    <!-- <button
+                      (click)="deleteMessage(item['id'])"
+                      class="btn btn-danger"
+                    >
+                      Sil
+                    </button> -->
+                    <!-- popover for deleting beginning -->
+                    <ng-template #popContent>
+                      <div class="text-center">
+                        <button
+                          class="btn btn-danger col-5 mr-1"
+                          (click)="deleteMessage(item['id'])"
+                        >
+                          Sil
+                        </button>
+                        <button class="btn btn-primary col-5 ml-1">
+                          iptal
+                        </button>
+                      </div>
+                    </ng-template>
+                    <ng-template #popTitle>
+                      <b>Mesajı silmek üzeresiniz!</b>
+                    </ng-template>
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary mr-2"
+                      [ngbPopover]="popContent"
+                      [popoverTitle]="popTitle"
+                      triggers="manual"
+                      #p1="ngbPopover"
+                      (click)="deletingPopoverToggle(p1)"
+                      class="material-icons float-right btn btn-danger"
+                    >
+                      delete
+                    </button>
+                    <!-- popover for deleting end -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </accordion-group>
     </accordion>
   </div>
 </div>

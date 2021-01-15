@@ -23,7 +23,7 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  addMessage(name, mail, message) {
+  Submit(name, mail, message) {
     let dateNow = new Date();
     let dateNowISO = dateNow.toDateString();
 
@@ -33,6 +33,6 @@ export class ContactComponent implements OnInit {
       date: dateNowISO,
       message: message,
     };
-    this.commonservice.addMessage(obj);
+    this.commonservice.addMessage(obj).subscribe();
   }
 }
