@@ -19,6 +19,8 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SliderconsoleComponent } from './adminconsole/sliderconsole/sliderconsole.component';
+import { GalleriesinfoconsoleComponent } from './adminconsole/galleriesinfoconsole/galleriesinfoconsole.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +33,7 @@ import { SliderconsoleComponent } from './adminconsole/sliderconsole/sliderconso
     NavbarComponent,
     SliderComponent,
     SliderconsoleComponent,
+    GalleriesinfoconsoleComponent,
   ],
   imports: [
     BrowserModule,

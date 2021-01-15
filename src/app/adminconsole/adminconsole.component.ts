@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GalleryService } from '../services/gallery.service';
 import { ImageService } from '../services/image.service';
-import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
 
 @Component({
@@ -14,44 +12,27 @@ export class AdminconsoleComponent implements OnInit {
   imagesSlider: Array<object> = [];
   imagesOfGalleries: Array<any> = [];
   allGalleries: Array<object> = [];
-  newGalleryForm: FormGroup;
   allMessages: Array<object> = [];
 
   _loginControl: boolean;
   shw: boolean;
 
   constructor(
-    private fb: FormBuilder,
     public imageservice: ImageService,
     public galleryservice: GalleryService,
     public imageService: ImageService,
-    public commonservice: CommonService,
-    public router: Router
-  ) {
-    this.createNewGalleryForm();
-  }
+    public commonservice: CommonService
+  ) {}
 
   ngOnInit(): void {
     this.GetImagesOnGalleries();
-
     this.getAllMessages();
     this._loginControl = true;
     this.shw = true;
   }
 
-  createNewGalleryForm() {
-    this.newGalleryForm = this.fb.group({
-      galleryTitle: ['', Validators.required],
-      fontlink: ['', Validators.required],
-      fontFamily: ['', Validators.required],
-      fontColor: ['', Validators.required],
-      fontSize: ['', Validators.required],
-    });
-  }
   //Authentication=====================
   LogOut() {}
-
-  // SLİDER CRUD OPS.==========
 
   // IMAGES IN GALLERIES CRUD OPS.=================
 
@@ -113,76 +94,6 @@ export class AdminconsoleComponent implements OnInit {
       .subscribe((data) => {
         if (data.data.updateImage != null) {
           alert('Görsel başarı ile güncellendi.');
-        }
-      });
-  }
-
-  // GALLERIES CRUD OPS.
-
-  AddNewGallery(
-    galleryTitle,
-    fontlink,
-    fontFamily,
-    fontColor,
-    fontSize,
-    bgPhotoLink
-  ) {
-    // id is generated in the server
-    const newGallery = {
-      id: '',
-      backGroungImageUrl: bgPhotoLink,
-      fontColor: fontColor,
-      fontFamily: fontFamily,
-      fontSize: fontSize,
-      galleryTitle: galleryTitle,
-      googleFontLink: fontlink,
-    };
-    this.galleryservice.addGallery(newGallery).subscribe((data) => {
-      if (data) {
-        this.allGalleries = Object.assign([], this.allGalleries);
-        this.allGalleries.push(data.data.addGallery);
-      }
-    });
-  }
-
-  DeleteThisGallery(galleryInfo) {
-    // deletes gallery from Galleries in DB
-    this.galleryservice.deleteGallery(galleryInfo['id']).subscribe((data) => {
-      if (data.data.deleteGallery === '1') {
-        // deletes gallery from DOM
-
-        const index = this.allGalleries.indexOf(galleryInfo);
-        this.allGalleries = Object.assign([], this.allGalleries);
-        this.allGalleries.splice(index, 1);
-        // deletes images of the gallery from DOM
-      } else {
-        ('Silinme işlemi sırasında bir hata oluştu lütfen tekrar deneyiniz.');
-      }
-    });
-  }
-
-  UpdateThisGallery(
-    galeriadi,
-    fontlink,
-    yazikarakteri,
-    renk,
-    punto,
-    photo,
-    gallery
-  ) {
-    const updatedGallery = {
-      backGroungImageUrl: photo,
-      fontColor: renk,
-      fontFamily: yazikarakteri,
-      fontSize: punto,
-      galleryTitle: galeriadi,
-      googleFontLink: fontlink,
-    };
-    this.galleryservice
-      .updateGallery(gallery['id'], updatedGallery)
-      .subscribe((data) => {
-        if (data.data.updateGallery != null) {
-          alert('Galeri başarı ile güncellendi.');
         }
       });
   }
