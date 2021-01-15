@@ -18,6 +18,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SliderconsoleComponent } from './adminconsole/sliderconsole/sliderconsole.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MotherPageComponent,
     NavbarComponent,
     SliderComponent,
+    SliderconsoleComponent,
   ],
   imports: [
     BrowserModule,
