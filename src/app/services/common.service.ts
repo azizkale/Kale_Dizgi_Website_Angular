@@ -28,6 +28,24 @@ const DELETE_MESSAGE = gql`
     deleteMessage(id: $id)
   }
 `;
+const ADD_USER = gql`
+  mutation addUser($user: String!) {
+    addUser(user: $user) {
+      userName
+      mail
+      password
+    }
+  }
+`;
+const LOGIN = gql`
+  query login($mail: String!, $password: ID!) {
+    login(mail: $mail, password: $password) {
+      id
+      userName
+      mail
+    }
+  }
+`;
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +75,24 @@ export class CommonService {
         id: id,
       },
     });
+  }
+
+  addUser(user: object): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ADD_USER,
+      variables: {
+        user: JSON.stringify(user),
+      },
+    });
+  }
+
+  login(mail: string, password: any): Observable<any> {
+    return this.apollo.watchQuery<any>({
+      query: LOGIN,
+      variables: {
+        mail: mail,
+        password: password,
+      },
+    }).valueChanges;
   }
 }

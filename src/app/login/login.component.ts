@@ -11,15 +11,5 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  LogIn(name, password) {
-    //   this.auth
-    //     .signInWithEmailAndPassword(name, password)
-    //     .then(() => {
-    //       alert('yetkili Girişi sağlandı.');
-    //       this.router.navigate(['adminconsole']);
-    //     })
-    //     .catch(() => {
-    //       alert('Yetkili girişi sağlanamadı.');
-    //     });
-  }
+  LogIn(name, password) {}
 }
