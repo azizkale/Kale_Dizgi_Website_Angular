@@ -39,11 +39,7 @@ const ADD_USER = gql`
 `;
 const LOGIN = gql`
   query login($mail: String!, $password: ID!) {
-    login(mail: $mail, password: $password) {
-      id
-      userName
-      mail
-    }
+    login(mail: $mail, password: $password)
   }
 `;
 

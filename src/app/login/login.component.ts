@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(public router: Router) {}
+  constructor(public commonservice: CommonService) {}
 
   ngOnInit(): void {}
 
-  LogIn(name, password) {}
+  LogIn(mail, password) {
+    this.commonservice.login(mail, password).subscribe((data) => {
+      localStorage.setItem('token', data.data.login);
+      console.log(localStorage.getItem('token'));
+    });
+  }
 }
