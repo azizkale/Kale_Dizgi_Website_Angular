@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class AdminconsoleComponent implements OnInit {
   allMessages: Array<object> = [];
   _loginControl: boolean;
 
-  constructor(public commonservice: CommonService) {}
+  constructor(public commonservice: CommonService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllMessages();
@@ -20,7 +21,10 @@ export class AdminconsoleComponent implements OnInit {
   }
 
   //Authentication=====================
-  LogOut() {}
+  LogOut() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/']);
+  }
 
   // Messages ====================
   getAllMessages() {
