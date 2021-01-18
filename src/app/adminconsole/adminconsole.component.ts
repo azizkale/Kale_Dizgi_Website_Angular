@@ -11,19 +11,19 @@ export class AdminconsoleComponent implements OnInit {
   // imagesSlider: Array<object> = [];
 
   allMessages: Array<object> = [];
-  _loginControl: boolean;
+  _loginControl: boolean = true;
 
   constructor(public commonservice: CommonService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllMessages();
-    this._loginControl = true;
   }
 
   //Authentication=====================
   LogOut() {
     localStorage.removeItem('token');
-    this.router.navigate(['/']);
+    window.location.reload();
+    this.router.navigate(['/login']);
   }
 
   // Messages ====================

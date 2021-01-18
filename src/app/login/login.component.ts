@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
 
 @Component({
@@ -7,14 +8,14 @@ import { CommonService } from '../services/common.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(public commonservice: CommonService) {}
+  constructor(public commonservice: CommonService, private router: Router) {}
 
   ngOnInit(): void {}
 
   LogIn(mail, password) {
     this.commonservice.login(mail, password).subscribe((data) => {
       localStorage.setItem('token', data.data.login);
-      console.log(localStorage.getItem('token'));
+      this.router.navigate(['adminconsole']);
     });
   }
 }
