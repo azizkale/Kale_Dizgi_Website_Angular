@@ -57,7 +57,6 @@ export class MotherPageComponent implements OnInit {
           this.allGalleries.push(arr);
         });
       });
-    console.log(this.allGalleries);
   }
 
   GetImagesOnGalleries() {
@@ -82,7 +81,6 @@ export class MotherPageComponent implements OnInit {
         });
       });
     });
-    console.log(this.imagesOfGalleries);
   }
 
   GetScreenSizeForTheGalleries() {

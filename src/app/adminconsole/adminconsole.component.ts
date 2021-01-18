@@ -22,7 +22,6 @@ export class AdminconsoleComponent implements OnInit {
   //Authentication=====================
   LogOut() {
     localStorage.removeItem('token');
-    window.location.reload();
     this.router.navigate(['/login']);
   }
 

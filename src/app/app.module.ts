@@ -21,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SliderconsoleComponent } from './adminconsole/sliderconsole/sliderconsole.component';
 import { GalleriesinfoconsoleComponent } from './adminconsole/galleriesinfoconsole/galleriesinfoconsole.component';
 import { GalleriesImagesconsoleComponent } from './adminconsole/galleries-imagesconsole/galleries-imagesconsole.component';
+import { AuthGuard } from './Auth.Guard';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { GalleriesImagesconsoleComponent } from './adminconsole/galleries-images
     BrowserAnimationsModule,
     NgbModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

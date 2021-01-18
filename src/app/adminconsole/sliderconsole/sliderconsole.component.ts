@@ -17,7 +17,6 @@ export class SliderconsoleComponent implements OnInit {
 
   GetSliderImages() {
     this.imageservice.getImages('slider').subscribe((data) => {
-      console.log(data);
       data.data.getImages.map((img) => {
         const obj = {
           image: img.url,
